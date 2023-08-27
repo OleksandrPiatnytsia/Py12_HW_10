@@ -7,7 +7,7 @@ from .views import RegisterView
 app_name = "users"
 
 urlpatterns = [
-    path("signup/", RegisterView.as_view(template_name="users/signup.html"), name="signup"),
+    path("signup/", RegisterView.as_view(), name="signup"),
     path("signin/",
          LoginView.as_view(template_name="users/signin.html", form_class=LoginForm, redirect_authenticated_user=True),
          name="signin"),

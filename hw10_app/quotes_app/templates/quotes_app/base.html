@@ -22,6 +22,12 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quotes_app:add_author' %}">Add author</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quotes_app:add_quot' %}">Add quot</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
                 </li>
                 {% else %}

@@ -9,12 +9,12 @@ from .forms import RegisterForm
 
 
 class RegisterView(View):
-    template_name = "users/signin.html"
+    template_name = "users/signup.html"
     form_class = RegisterForm
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(to="photo_app:main")
+            return redirect(to="quotes_app:main")
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
