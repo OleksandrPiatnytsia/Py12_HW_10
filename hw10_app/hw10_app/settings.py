@@ -86,15 +86,6 @@ DATABASES = {
         'PASSWORD': config.get('POSTGRESDB', 'PASSWORD'),
         'HOST': config.get('POSTGRESDB', 'DOMAIN'),
         'PORT': config.get('POSTGRESDB', 'PORT')
-    },
-    'mongodb': {
-        'ENGINE': 'djongo',
-        'NAME': config.get('MONGODB', 'DBNAME'),
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': config.get('MONGODB', 'HOST'),
-            'port': config.get('MONGODB', 'PORT'),
-        }
     }
 }
 
