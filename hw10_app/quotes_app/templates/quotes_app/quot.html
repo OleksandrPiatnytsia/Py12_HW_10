@@ -1,0 +1,20 @@
+{% extends 'quotes_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    {% if form.errors and form.non_field_errors %}
+    <span class="alert alert-danger" role="alert">{{form.non_field_errors}}</span>
+    {% endif %}
+    <form action="{% url 'quotes_app:add_quot' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <a href="{% url 'quotes_app:main' %}" class="btn btn-success">To main</a>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
