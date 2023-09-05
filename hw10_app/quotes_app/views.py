@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from .forms import AuthorForm, QuotForm
-from .models import Quot, Author
+from .models import Quot, Author, Tag
 
 
 def index(request):
@@ -42,11 +42,18 @@ def add_author(request):
 def add_quot(request):
     if request.method == "POST":
 
-        quot_form = QuotForm(request.POST, instance=Author())
+        quot_form = QuotForm(request.POST)
 
         if quot_form.is_valid():
 
-            quot_form.save()
+            quot = quot_form.save(commit=False)
+            quot.save()
+            tag_names = str(quot_form.cleaned_data["tags"])
+
+            for tag_name in tag_names.split(","):
+
+                tag, _ = Tag.objects.get_or_create(name=tag_name.strip())
+                quot.tags.add(tag)
 
             return redirect(to="quotes_app:main")
 
