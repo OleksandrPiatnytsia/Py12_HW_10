@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .forms import AuthorForm, QuotForm
@@ -10,6 +11,15 @@ def index(request):
     return render(request,
                   "quotes_app/index.html",
                   context={"title": "Quotes app main", "quotes": quotes, "empty_text":"____________________"})
+
+
+def author_page(request):
+    author_id = request.GET.get('author_id')
+
+    author = Author.objects.filter(id=author_id).first()
+
+    return render(request, "quotes_app/author_page.html", context={"title": "Author page", "author": author})
+    # return HttpResponse("Author Page for " + author.fullname)
 
 
 @login_required

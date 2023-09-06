@@ -1,47 +1,30 @@
-{% extends 'quotes/base.html' %} {% block content %}
+{% extends 'quotes_app/base.html' %}
+{% block content %}
 
-<div class="row">
-  <div class="col-md-2 mr-2">
-    {% if author.photo %}
-    <img
-      class="img-article-left thumb"
-      width="156"
-      src="{{ author.photo.url }}"
-    />
-    {% endif %}
-  </div>
 
-  <div class="col-md-8">
-    <div class="author-details">
-      <h3 class="author-title">{{ author.fullname }}</h3>
-      <div>
-        {% if user.is_authenticated %}
-        <a
-          href="{% url 'quotes:add_author' %}?author_slug={{ author.slug }}"
-          class="btn btn-primary"
-          >Update Info</a
-        >
-        {% endif %}
-      </div>
-      <p>
-        <strong>Born:</strong>
-        <span class="author-born-date">{{ author.born_date }}</span>
-        <span class="author-born-location">{{ author.born_location }}</span>
-      </p>
-      <p class="text-justify"><strong>Description:</strong></p>
-      <div class="author-description container text-justify">
-        {{ author.description }}
-      </div>
+<a href="{% url 'quotes_app:main' %}">
+    <div class="container mt-3">
+        <h1>Quotes to Scrape</h1>
     </div>
-  </div>
+</a>
+
+<br>
+<br>
+
+<div class="container mt-10 text-left">
+    <div class="author-details">
+        <h3 class="author-title">{{ author.fullname }}</h3>
+        <p>
+            <strong>Born:</strong>
+            <span class="author-born-date">{{ author.born_date }}</span>
+            <span class="author-born-location">{{ author.born_location }}</span>
+        </p>
+        <p class="text-justify"><strong>Description:</strong></p>
+        <div class="author-description container text-justify">
+            {{ author.description }}
+        </div>
+    </div>
 </div>
 
-<hr />
-<div class="row">
-  <div class="col-md-2">
-    <h4>Quotes by <br />{{ author.fullname }}</h4>
-  </div>
-  <div class="col-md-8">{% include 'quotes/quotes.html' %}</div>
-</div>
 
 {% endblock %}

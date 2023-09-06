@@ -6,27 +6,38 @@
     <h1>Quotes to Scrape</h1>
 </div>
 
+<div class="container mt-10 float-end" style="width: 300px;">
+    <div class="container mt-10 text-end"><h2>Top ten tags</h2>
+        <h1><span class="badge bg-custom">test</span></h1>
+        <h2><span class="badge bg-custom">test</span></h2>
+        <h3><span class="badge bg-custom">test</span></h3>
+        <h4><span class="badge bg-custom">test</span></h4>
+        <h5><span class="badge bg-custom">test</span></h5>
+        <h6><span class="badge bg-custom">test</span></h6>
+    </div>
+</div>
+<style>
+    .bg-custom {
+        background-color: #87CEFA; /* Змініть цей колір на бажаний */
+    }
+</style>
+
 {% for quot in quotes %}
 
-
 <div class="alert-container">
-
     <div class="alert alert-info" role="alert">
-
         <h4 class="alert-heading"><em>{{ quot.quot }}</em></h4>
         <p class="mb-0">by <span>
-                    <small class="author" itemprop="author">
-                        <a href="{% url 'quotes_app:add_author'%}">
-                            {{ quot.author.fullname }}
-                        </a>
-                    </small>
-                </span></p>
-
+            <small class="author" itemprop="author">
+                <a href="{% url 'quotes_app:author_page' %}?author_id={{ quot.author.id }}">
+                    {{ quot.author.fullname }}
+                </a>
+            </small>
+        </span></p>
         <p class="mb-0">
         <div class="tags mt-0 mb-0">
             Tags:
             {% for tag in quot.tags.all %}
-
             <a href="{% url 'quotes_app:add_author' %}">
                 <button type="button" class="btn btn"
                         style="--bs-btn-padding-y: .13rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .75rem; background-color: #87CEFA;">
@@ -39,6 +50,7 @@
     </div>
 </div>
 {% endfor %}
+
 <style>
     /* Додайте стилі для контейнера alert */
     .alert-container {
@@ -46,6 +58,7 @@
         margin: 0 auto; /* Вирівняйте по центру */
     }
 </style>
+
 <div class="container mt-3">
     <nav aria-label="...">
         <ul class="pagination justify-content-center" style="padding: 10px;">
