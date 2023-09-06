@@ -2,8 +2,60 @@
 
 {% block content %}
 
-<div class="container mt-3">
+<div class="container mt-3 text-center">
     <h1>Quotes to Scrape</h1>
 </div>
 
+{% for quot in quotes %}
+
+
+<div class="alert-container">
+
+    <div class="alert alert-info" role="alert">
+
+        <h4 class="alert-heading"><em>{{ quot.quot }}</em></h4>
+        <p class="mb-0">by <span>
+                    <small class="author" itemprop="author">
+                        <a href="{% url 'quotes_app:add_author'%}">
+                            {{ quot.author.fullname }}
+                        </a>
+                    </small>
+                </span></p>
+
+        <p class="mb-0">
+        <div class="tags mt-0 mb-0">
+            Tags:
+            {% for tag in quot.tags.all %}
+
+            <a href="{% url 'quotes_app:add_author' %}">
+                <button type="button" class="btn btn"
+                        style="--bs-btn-padding-y: .13rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .75rem; background-color: #87CEFA;">
+                    {{ tag.name }}
+                </button>
+            </a>
+            {% endfor %}
+        </div>
+        </p>
+    </div>
+</div>
+{% endfor %}
+<style>
+    /* Додайте стилі для контейнера alert */
+    .alert-container {
+        max-width: 800px; /* Задайте бажану ширину */
+        margin: 0 auto; /* Вирівняйте по центру */
+    }
+</style>
+<div class="container mt-3">
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center" style="padding: 10px;">
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
 {% endblock %}

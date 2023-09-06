@@ -7,7 +7,9 @@ from .models import Quot, Author, Tag
 
 def index(request):
     quotes = Quot.objects.filter().all()
-    return render(request, "quotes_app/index.html", context={"title": "Quotes app main", "quotes": quotes})
+    return render(request,
+                  "quotes_app/index.html",
+                  context={"title": "Quotes app main", "quotes": quotes, "empty_text":"____________________"})
 
 
 @login_required

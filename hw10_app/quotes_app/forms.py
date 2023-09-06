@@ -7,20 +7,24 @@ class AuthorForm(ModelForm):
     fullname = CharField(
         max_length=200,
         required=True,
-        widget=TextInput(attrs={"class": "form-control"}))
+        widget=TextInput(attrs={"class": "form-control"})
+    )
 
     born_date = CharField(
         max_length=120,
         required=True,
-        widget=TextInput(attrs={"class": "form-control"}))
+        widget=TextInput(attrs={"class": "form-control"})
+    )
 
     born_location = CharField(
         max_length=120, required=True,
-        widget=TextInput(attrs={"class": "form-control"}))
+        widget=TextInput(attrs={"class": "form-control"})
+    )
 
     description = CharField(
         required=True,
-        widget=Textarea(attrs={"class": "form-control"}))
+        widget=Textarea(attrs={"class": "form-control"})
+    )
 
     class Meta:
         model = Author
@@ -38,10 +42,12 @@ class QuotForm(ModelForm):
         required=True,
         widget=Select(attrs={"class": "form-control"})
     )
+
     quot = CharField(
         label="Quot",
         required=True,
-        widget=Textarea(attrs={"class": "form-control"}))
+        widget=Textarea(attrs={"class": "form-control"})
+    )
 
     tags = CharField(
         label="Tags",
