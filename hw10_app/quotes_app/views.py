@@ -10,7 +10,7 @@ def index(request):
     quotes = Quot.objects.filter().all()
     return render(request,
                   "quotes_app/index.html",
-                  context={"title": "Quotes app main", "quotes": quotes, "empty_text":"____________________"})
+                  context={"title": "Quotes app main", "quotes": quotes, "empty_text": "____________________"})
 
 
 def author_page(request):
@@ -20,6 +20,18 @@ def author_page(request):
 
     return render(request, "quotes_app/author_page.html", context={"title": "Author page", "author": author})
     # return HttpResponse("Author Page for " + author.fullname)
+
+
+def tags_search(request):
+    tag_id = request.GET.get('tag_id')
+
+    tag = Tag.objects.filter(id=tag_id).first()
+    quotes = Quot.objects.filter(tags=tag).all()
+
+    print(quotes)
+
+    # return render(request, "quotes_app/author_page.html", context={"title": "Author page", "author": author})
+    return HttpResponse(f"tag id {tag} find some qotes {quotes}")
 
 
 @login_required
@@ -63,7 +75,6 @@ def add_quot(request):
             tag_names = str(quot_form.cleaned_data["tags"])
 
             for tag_name in tag_names.split(","):
-
                 tag, _ = Tag.objects.get_or_create(name=tag_name.strip())
                 quot.tags.add(tag)
 

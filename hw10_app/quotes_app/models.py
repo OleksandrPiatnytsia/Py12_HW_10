@@ -15,6 +15,9 @@ class Author(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=20, null=False)
 
+    def __str__(self):
+        return self.name
+
 
 class Quot(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=False)

@@ -38,7 +38,7 @@
         <div class="tags mt-0 mb-0">
             Tags:
             {% for tag in quot.tags.all %}
-            <a href="{% url 'quotes_app:add_author' %}">
+            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
                 <button type="button" class="btn btn"
                         style="--bs-btn-padding-y: .13rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .75rem; background-color: #87CEFA;">
                     {{ tag.name }}
