@@ -6,11 +6,15 @@ from .forms import AuthorForm, QuotForm
 from .models import Quot, Author, Tag
 
 
+def scrap_data(request):
+    return HttpResponse("SSSSSSSSSSSCRAAAAAAAPPIIIIING")
+
+
 def index(request):
     quotes = Quot.objects.filter().all()
     return render(request,
                   "quotes_app/index.html",
-                  context={"title": "Quotes app main", "quotes": quotes, "empty_text": "____________________"})
+                  context={"title": "Quotes app main", "quotes": quotes, "quotes_view": False})
 
 
 def author_page(request):
@@ -28,10 +32,17 @@ def tags_search(request):
     tag = Tag.objects.filter(id=tag_id).first()
     quotes = Quot.objects.filter(tags=tag).all()
 
-    print(quotes)
+    return render(request,
+                  "quotes_app/index.html",
+                  context={"title": "Tag search",
+                           "quotes": quotes,
+                           "quotes_view": True,
+                           "tag": tag})
+
+    # print(quotes)
 
     # return render(request, "quotes_app/author_page.html", context={"title": "Author page", "author": author})
-    return HttpResponse(f"tag id {tag} find some qotes {quotes}")
+    # return HttpResponse(f"tag id {tag} find some qotes {quotes}")
 
 
 @login_required
@@ -87,7 +98,13 @@ def add_quot(request):
 
         quot_form = QuotForm()
 
-        return render(request, "quotes_app/quot.html", context={"title": "Quot add", "form": quot_form})
+        return render(
+            request,
+            "quotes_app/quot.html",
+            context={
+                "title": "Quot add",
+                "form": quot_form}
+        )
 
 # @login_required
 # def edit(request, img_id):

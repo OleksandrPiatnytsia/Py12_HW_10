@@ -2,73 +2,109 @@
 
 {% block content %}
 
-<div class="container mt-3 text-center">
-    <h1>Quotes to Scrape</h1>
-</div>
-
-<div class="container mt-10 float-end" style="width: 300px;">
-    <div class="container mt-10 text-end"><h2>Top ten tags</h2>
-        <h1><span class="badge bg-custom">test</span></h1>
-        <h2><span class="badge bg-custom">test</span></h2>
-        <h3><span class="badge bg-custom">test</span></h3>
-        <h4><span class="badge bg-custom">test</span></h4>
-        <h5><span class="badge bg-custom">test</span></h5>
-        <h6><span class="badge bg-custom">test</span></h6>
+<a href="{% url 'quotes_app:main' %}">
+    <div class="container mt-3 text-center">
+        <h1>Quotes to Scrape</h1>
     </div>
-</div>
-<style>
+</a>
+
+<div class=" container mt-10 float-end" style="width: 300px;">
+        <div class="container mt-10 text-end"><h2>Top ten tags</h2>
+            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
+                <h1><span class="badge bg-custom">test</span></h1>
+            </a>
+            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
+                <h2><span class="badge bg-custom">test</span></h2>
+            </a>
+            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
+                <h3><span class="badge bg-custom">test</span></h3>
+            </a>
+            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
+                <h4><span class="badge bg-custom">test</span></h4>
+            </a>
+            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
+                <h5><span class="badge bg-custom">test</span></h5>
+            </a>
+            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
+                <h6><span class="badge bg-custom">test</span></h6>
+            </a>
+        </div>
+    </div>
+    <style>
     .bg-custom {
-        background-color: #87CEFA; /* Змініть цей колір на бажаний */
+        background-color: #87CEFA;
     }
-</style>
 
-{% for quot in quotes %}
 
-<div class="alert-container">
-    <div class="alert alert-info" role="alert">
-        <h4 class="alert-heading"><em>{{ quot.quot }}</em></h4>
-        <p class="mb-0">by <span>
+
+
+
+    </style>
+
+    {% if quotes_view %}
+    <br>
+    <div class="container mt-3 text-left">
+        <h2>Viewing tag:
+            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
+                {{ tag }}
+            </a>
+        </h2>
+    </div>
+    {% endif %}
+
+    {% for quot in quotes %}
+
+    <div class="alert-container">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading"><em>{{ quot.quot }}</em></h4>
+            <p class="mb-0">by <span>
             <small class="author" itemprop="author">
                 <a href="{% url 'quotes_app:author_page' %}?author_id={{ quot.author.id }}">
                     {{ quot.author.fullname }}
                 </a>
             </small>
         </span></p>
-        <p class="mb-0">
-        <div class="tags mt-0 mb-0">
-            Tags:
-            {% for tag in quot.tags.all %}
-            <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
-                <button type="button" class="btn btn"
-                        style="--bs-btn-padding-y: .13rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .75rem; background-color: #87CEFA;">
-                    {{ tag.name }}
-                </button>
-            </a>
-            {% endfor %}
+            <p class="mb-0">
+            <div class="tags mt-0 mb-0">
+                Tags:
+                {% for tag in quot.tags.all %}
+                <a href="{% url 'quotes_app:tags_search' %}?tag_id={{ tag.id }}">
+                    <button type="button" class="btn btn"
+                            style="--bs-btn-padding-y: .13rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .75rem; background-color: #87CEFA;">
+                        {{ tag.name }}
+                    </button>
+                </a>
+                {% endfor %}
+            </div>
+            </p>
         </div>
-        </p>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
 
-<style>
-    /* Додайте стилі для контейнера alert */
-    .alert-container {
-        max-width: 800px; /* Задайте бажану ширину */
-        margin: 0 auto; /* Вирівняйте по центру */
+    <style>
+
+     .container {
+        max-width: 800px;
+        margin: 0 auto;
     }
-</style>
 
-<div class="container mt-3">
-    <nav aria-label="...">
-        <ul class="pagination justify-content-center" style="padding: 10px;">
-            <li class="page-item disabled">
-                <span class="page-link">Previous</span>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-</div>
-{% endblock %}
+    .alert-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    </style>
+
+    <div class="container mt-3">
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center" style="padding: 10px;">
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endblock %}
