@@ -1,13 +1,18 @@
+from pprint import pprint
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .forms import AuthorForm, QuotForm
 from .models import Quot, Author, Tag
+from .scraping import make_scraping
 
 
 def scrap_data(request):
-    return HttpResponse("SSSSSSSSSSSCRAAAAAAAPPIIIIING")
+    result_dict = make_scraping()
+
+    return HttpResponse(str(result_dict["authors"]))
 
 
 def index(request):

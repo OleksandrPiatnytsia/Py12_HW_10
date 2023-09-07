@@ -8,16 +8,24 @@
     <form action="{% url 'quotes_app:add_author' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <div class="mb-3">
+        <div class="container mt-3 text-center">
             <button type="submit" class="btn btn-primary">Save</button>
             <button type="reset" class="btn btn-secondary">Reset</button>
             <a href="{% url 'quotes_app:main' %}" class="btn btn-success">To main</a>
         </div>
     </form>
      <div class="container mt-3 text-center">
-        <a href="{% url 'quotes_app:scrap_data' %}" class="btn btn-success">Make scraping: http://quotes.toscrape.com/</a>
+        <a href="{% url 'quotes_app:scrap_data' %}" class="btn btn-success">Make scraping from: http://quotes.toscrape.com/</a>
     </div>
 
 </div>
+ <style>
+
+     .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+ </style>
 
 {% endblock %}

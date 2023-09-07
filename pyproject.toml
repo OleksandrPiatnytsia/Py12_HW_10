@@ -10,6 +10,9 @@ packages = [{include = "hw_10"}]
 python = "^3.11"
 django = "^4.2.4"
 psycopg2 = "^2.9.7"
+requests = "^2.31.0"
+beautifulsoup4 = "^4.12.2"
+lxml = "^4.9.3"
 
 
 [build-system]
