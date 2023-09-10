@@ -13,7 +13,7 @@ def make_scraping():
     authors = []
     authors_references_used = []
 
-    page_count = 9
+    page_count = 0
 
     while True:
 
@@ -70,9 +70,11 @@ def make_scraping():
                 span_elements = div.xpath(".//span[@class='text']")
 
                 if span_elements:
-                    quote = span_elements[0].text
+                    quot = span_elements[0].text
 
-                quotes.append({"tags": tag_list, "author": author, "quote": quote})
+                quotes.append({"tags": tag_list, "author": author, "quot": quot})
+
+                print(f"scrap author {author}")
 
             # Get authors info
             for author_ref in authors_references:

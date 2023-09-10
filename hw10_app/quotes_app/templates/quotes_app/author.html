@@ -1,6 +1,9 @@
 {% extends 'quotes_app/base.html' %}
 
 {% block content %}
+<div class="container mt-3 text-center">
+    <h2>Ceate new author</h1>
+</div>
 <div class="container">
     {% if form.errors and form.non_field_errors %}
     <span class="alert alert-danger" role="alert">{{form.non_field_errors}}</span>
@@ -14,18 +17,20 @@
             <a href="{% url 'quotes_app:main' %}" class="btn btn-success">To main</a>
         </div>
     </form>
-     <div class="container mt-3 text-center">
-        <a href="{% url 'quotes_app:scrap_data' %}" class="btn btn-success">Make scraping from: http://quotes.toscrape.com/</a>
+    <div class="container mt-3 text-center">
+        <a href="{% url 'quotes_app:scrap_data' %}" class="btn btn-success">Make scraping from:
+            http://quotes.toscrape.com/</a>
     </div>
 
 </div>
- <style>
+<style>
 
      .container {
         max-width: 800px;
         margin: 0 auto;
     }
 
- </style>
+
+</style>
 
 {% endblock %}

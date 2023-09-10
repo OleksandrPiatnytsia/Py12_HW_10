@@ -2,8 +2,16 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container mt-3 text-center">
     <h2 class="mb-3">Повертайтесь будь ласка</h2>
+    <p>Redirecting in 3 seconds...</p>
 </div>
+
+<script type="text/javascript">
+    setTimeout(function() {
+        window.location.href = "{% url 'quotes_app:main' %}";
+    }, 3000);
+
+</script>
 
 {% endblock %}

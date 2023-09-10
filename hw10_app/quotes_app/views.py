@@ -1,7 +1,4 @@
-from pprint import pprint
-
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .forms import AuthorForm, QuotForm
@@ -10,13 +7,62 @@ from .scraping import make_scraping
 
 
 def scrap_data(request):
-    result_dict = make_scraping()
+    if request.method == "GET":
 
-    return HttpResponse(str(result_dict["authors"]))
+        result_dict = make_scraping()
+
+        saved_authors = {}
+
+        for author_dict in result_dict["authors"]:
+
+            author = Author.objects.filter(fullname=author_dict["fullname"]).first()
+
+            if not author:
+                author = Author()
+                author.fullname = author_dict["fullname"]
+                author.born_date = author_dict["born_date"]
+                author.born_location = author_dict["born_location"]
+                author.description = author_dict["description"]
+                author.save()
+
+            saved_authors.update({author.fullname:author})
+
+        for quot_dict in result_dict["quotes"]:
+
+            # db_author = Author.objects.filter(fullname=quot_dict["author"]).first()
+
+            db_author = saved_authors.get(quot_dict["author"])
+
+            print(f"fullname: {quot_dict['author']} class: {db_author}")
+
+            if db_author:
+
+                new_quot = Quot()
+                new_quot.author = db_author
+                new_quot.quot = quot_dict["quot"]
+                new_quot.save()
+
+                for tag_name in quot_dict["tags"]:
+
+                    tag_db = Tag.objects.filter(name=tag_name).first()
+                    if not tag_db:
+                        new_tag = Tag()
+                        new_tag.name = tag_name
+                        new_tag.save()
+                        tag_db = new_tag
+
+                    new_quot.tags.add(tag_db)
+
+                new_quot.save()
+
+            else:
+                print(f"problem author {quot_dict['author']}")
+
+    return redirect(to="quotes_app:main")
 
 
 def index(request):
-    quotes = Quot.objects.filter().all()
+    quotes = Quot.objects.all().order_by('creation_date', 'id')
     return render(request,
                   "quotes_app/index.html",
                   context={"title": "Quotes app main", "quotes": quotes, "quotes_view": False})

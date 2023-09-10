@@ -1,6 +1,9 @@
 {% extends 'quotes_app/base.html' %}
 
 {% block content %}
+<div class="container mt-3 text-center">
+    <h2>Ceate new quot</h2>
+</div>
 <div class="container">
     {% if form.errors and form.non_field_errors %}
     <span class="alert alert-danger" role="alert">{{form.non_field_errors}}</span>

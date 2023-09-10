@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container mt-3 text-center">
     <h2 class="mb-3">Login User</h2>
 
     {% if messages %}
@@ -16,7 +16,6 @@
     {% if form.errors and form.non_field_errors %}
     <span class="alert alert-danger" role="alert">{{form.non_field_errors}}</span>
     {% endif %}
-
     <form method="post">
         {% csrf_token %}
         <div class="mb-3">
