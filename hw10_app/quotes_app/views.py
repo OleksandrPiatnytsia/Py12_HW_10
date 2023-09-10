@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import login_required
+from django.db import connection
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .forms import AuthorForm, QuotForm
@@ -25,7 +27,7 @@ def scrap_data(request):
                 author.description = author_dict["description"]
                 author.save()
 
-            saved_authors.update({author.fullname:author})
+            saved_authors.update({author.fullname: author})
 
         for quot_dict in result_dict["quotes"]:
 
@@ -61,11 +63,54 @@ def scrap_data(request):
     return redirect(to="quotes_app:main")
 
 
+def get_most_used_tags():
+
+    sql_query = """CREATE TEMPORARY TABLE temp_table AS
+                SELECT 
+                  COUNT(1) AS tag_sum, 
+                  quot_tags.tag_id as tag_id
+                FROM 
+                  quotes_app_quot_tags AS quot_tags
+                GROUP BY 
+                  quot_tags.tag_id
+                ORDER BY 
+                  tag_sum DESC 
+                LIMIT 10;
+                
+                SELECT temp_table.tag_id AS tag_id,
+                    quotes_app_tag.name AS tag_name, 
+                    temp_table.tag_sum AS tag_sum
+                FROM temp_table
+                left join quotes_app_tag on
+                temp_table.tag_id = quotes_app_tag.id
+                ORDER BY 
+                  tag_sum desc,
+                  quotes_app_tag.name"""
+
+    with connection.cursor() as cursor:
+        cursor.execute(sql_query)
+
+        results = cursor.fetchall()
+
+        column_names = ["tag_id", "tag_name", "tag_sum"]
+
+        list_of_dicts = [dict(zip(column_names, row)) for row in results]
+
+        for dict_ in list_of_dicts:
+            dict_["font_size"] = dict_["tag_sum"]*0.16
+
+        return list_of_dicts
+
+
 def index(request):
     quotes = Quot.objects.all().order_by('creation_date', 'id')
+    tag_list = get_most_used_tags()
     return render(request,
                   "quotes_app/index.html",
-                  context={"title": "Quotes app main", "quotes": quotes, "quotes_view": False})
+                  context={"title": "Quotes app main",
+                           "quotes": quotes,
+                           "quotes_view": False,
+                           "tag_list": tag_list})
 
 
 def author_page(request):
@@ -82,13 +127,15 @@ def tags_search(request):
 
     tag = Tag.objects.filter(id=tag_id).first()
     quotes = Quot.objects.filter(tags=tag).all()
+    tag_list = get_most_used_tags()
 
     return render(request,
                   "quotes_app/index.html",
                   context={"title": "Tag search",
                            "quotes": quotes,
                            "quotes_view": True,
-                           "tag": tag})
+                           "tag": tag,
+                           "tag_list": tag_list})
 
     # print(quotes)
 

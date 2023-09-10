@@ -11,5 +11,6 @@ urlpatterns = [
     path("quotes/author_page", views.author_page, name="author_page"),
     path("quotes/tags_search", views.tags_search, name="tags_search"),
     path("quotes/scrap_data", views.scrap_data, name="scrap_data"),
+    path("quotes/tag_list", views.get_most_used_tags, name="tag_list"),
 
 ]
