@@ -9,9 +9,13 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import configparser
-import pathlib
+
 from pathlib import Path
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 SECRET_KEY = "django-insecure-+t4jlil6lfngxib74#fezct$9c8y2^=+rk40g7lq=q-z-lu13a"
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -73,19 +78,14 @@ WSGI_APPLICATION = "hw10_app.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-file_config = pathlib.Path(__file__).parent.parent.joinpath('config.ini')
-config = configparser.ConfigParser()
-config.read(file_config)
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config.get('POSTGRESDB', 'DB_NAME'),
-        'USER': config.get('POSTGRESDB', 'USER'),
-        'PASSWORD': config.get('POSTGRESDB', 'PASSWORD'),
-        'HOST': config.get('POSTGRESDB', 'DOMAIN'),
-        'PORT': config.get('POSTGRESDB', 'PORT')
+        'NAME': os.getenv('POSTGRES_DBNAME'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_DOMAIN'),
+        'PORT': os.getenv('POSTGRES_PORT')
     }
 }
 
